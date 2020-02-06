@@ -1,0 +1,27 @@
+svg {
+    border: none;
+}
+
+.node rect,
+.node circle {
+    stroke: #cecece;
+    fill: #fff;
+    cursor: pointer;
+}
+
+.node.current rect {
+    stroke: #48aff0;
+    fill: #fff;
+    stroke-width: 2;
+    cursor: pointer;
+}
+
+.label {
+    cursor: pointer;
+}
+
+.edgePath path {
+    stroke: #cecece;
+    fill: #cecece;
+    stroke-width: 1.5px;
+}
