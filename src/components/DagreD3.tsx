@@ -3,25 +3,8 @@ import * as d3 from 'd3';
 import dagreD3 from 'dagre-d3';
 
 import './DagreD3.css';
-
-export interface INode {
-    id: string;
-    name: string;
-    selected?: boolean;
-}
-
-export interface ILink {
-    originId: string;
-    destinationId: string;
-    label: string;
-}
-
-type attrs = { [key: string]: any };
-
-export interface IProps {
-    shape: 'rect' | 'circle';
-    attrs?: attrs;
-}
+import { curveType } from './helpers';
+import { INode, IProps } from '../interfaces';
 
 export interface IDagreD3Props {
     nodes: INode[];
@@ -39,7 +22,7 @@ export const DagreD3: FC<IDagreD3Props> = ({
     // textInput must be declared here so the ref can refer to it
     let ref: SVGSVGElement | undefined = undefined;
 
-    const shape = options?.shape || 'rect';
+    const nodeShape = options?.nodeShape || 'rect';
     const attrs = options?.attrs;
 
     useEffect(() => {
@@ -50,20 +33,34 @@ export const DagreD3: FC<IDagreD3Props> = ({
         const g = new dagreD3.graphlib.Graph().setGraph({});
 
         // Automatically label each of the nodes
-        nodes.forEach(({ id, name, selected }) => {
+        nodes.forEach(({ id, name, selected, shape }) => {
             g.setNode(id, {
                 label: name,
-                shape,
+                shape: shape || nodeShape,
                 class: [selected ? 'current' : '']
             });
         });
 
-        links.forEach(({ originId, destinationId, label }) => {
-            g.setEdge(originId, destinationId, { label });
-        });
+        links.forEach(
+            ({
+                originId,
+                destinationId,
+                label,
+                curve,
+                style,
+                arrowheadStyle
+            }) => {
+                g.setEdge(originId, destinationId, {
+                    label,
+                    style,
+                    arrowheadStyle,
+                    curve: curveType(curve)
+                });
+            }
+        );
 
         const svg = d3.select(ref);
-        const inner = svg.select('g');
+        const inner: any = svg.select('g');
 
         // Round the corners of the nodes
         if (attrs) {
@@ -98,7 +95,7 @@ export const DagreD3: FC<IDagreD3Props> = ({
         const xCenterOffset =
             (parseInt(svg.attr('width'), 10) - g.graph().width) / 2;
         inner.attr('transform', 'translate(' + xCenterOffset + ', 20)');
-    }, [attrs, links, nodes, onClick, ref, shape]);
+    }, [attrs, links, nodes, onClick, ref, nodeShape]);
 
     return (
         <svg ref={(refDOM: SVGSVGElement): SVGSVGElement => (ref = refDOM)}>

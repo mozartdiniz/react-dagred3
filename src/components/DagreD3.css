@@ -3,25 +3,21 @@ svg {
 }
 
 .node rect,
-.node circle {
-    stroke: #cecece;
+.node circle,
+.node polygon,
+.node ellipse {
+    stroke: black;
     fill: #fff;
-    cursor: pointer;
 }
 
 .node.current rect {
-    stroke: #48aff0;
+    stroke: red;
     fill: #fff;
     stroke-width: 2;
-    cursor: pointer;
-}
-
-.label {
-    cursor: pointer;
 }
 
 .edgePath path {
-    stroke: #cecece;
-    fill: #cecece;
+    stroke: black;
+    fill: black;
     stroke-width: 1.5px;
 }

@@ -1,5 +1,7 @@
-import { DagreD3, INode, ILink, IProps } from './components/DagreD3';
+import { DagreD3 } from './components/DagreD3';
+import { NodeShape, CurveType } from './types';
+import { ILink, INode, IProps } from './interfaces';
 
-export { INode, ILink, IProps };
+export { NodeShape, CurveType, ILink, INode, IProps };
 
 export default DagreD3;
