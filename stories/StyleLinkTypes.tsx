@@ -55,6 +55,7 @@ const links: ILink[] = [
     {
         originId: 'A',
         destinationId: 'C',
+        curve: 'linear',
         label: 'linear'
     },
     {
@@ -78,11 +79,13 @@ const links: ILink[] = [
     {
         originId: 'C',
         destinationId: 'G',
+        curve: 'linear',
         label: 'linear'
     },
     {
         originId: 'G',
         destinationId: 'H',
+        curve: 'linear',
         label: 'linear'
     },
     {
@@ -100,16 +103,14 @@ const links: ILink[] = [
     {
         originId: 'E',
         destinationId: 'F',
-        curve: 'basis',
         label: 'basis'
     },
     {
         originId: 'E',
         destinationId: 'D',
+        curve: 'linear',
         label: 'linear'
     }
 ];
 
-stories.add('Style Link Curve Types', () => (
-    <DagreD3 nodes={nodes} links={links} />
-));
+stories.add('Link Curve Types', () => <DagreD3 nodes={nodes} links={links} />);
